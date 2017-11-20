@@ -159,7 +159,18 @@ conf:
 	$(QUIET) install -m 644 $(TOP)/$(ESS_MODULE_MAKEFILE)  $(EPICS_MODULE_SRC_PATH)/
 
 
-.PHONY: env $(E3_ENV_NAME) $(EPICS_MODULE_NAME) git-submodule-sync init help help2 build clean install uninstall conf rebuild
+epics:
+	$(QUIET)echo "ASYN=$(M_ASYN)"                       > $(TOP)/$(EPICS_MODULE_SRC_PATH)/configure/RELEASE
+	$(QUIET)echo "EPICS_BASE=$(COMMUNITY_EPICS_BASE)"  >> $(TOP)/$(EPICS_MODULE_SRC_PATH)/configure/RELEASE
+	$(QUIET)echo "INSTALL_LOCATION=$(M_MODBUS)"         > $(TOP)/$(EPICS_MODULE_SRC_PATH)/configure/CONFIG_SITE	
+	sudo -E bash -c "$(MAKE) -C $(EPICS_MODULE_SRC_PATH)"
+
+epics-clean:
+	sudo -E bash -c "$(MAKE) -C $(EPICS_MODULE_SRC_PATH) clean"
+
+
+
+.PHONY: env $(E3_ENV_NAME) $(EPICS_MODULE_NAME) git-submodule-sync init help help2 build clean install uninstall conf rebuild epics epics-clean
 
 
 

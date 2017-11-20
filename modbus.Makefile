@@ -1,47 +1,45 @@
-
-#where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
-include ${REQUIRE_TOOLS}/driver.makefile
-
-# 
-USR_CFLAGS   += -Wno-unused-variable
-USR_CFLAGS   += -Wno-unused-function
-USR_CPPFLAGS += -Wno-unused-variable
-USR_CPPFLAGS += -Wno-unused-function
-
 #
+#  Copyright (c) 2017 - Present  Jeong Han Lee
+#  Copyright (c) 2017 - Present  European Spallation Source ERIC
 #
-# The following lines must be updated according to your modbus
+#  The program is free software: you can redistribute
+#  it and/or modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation, either version 2 of the
+#  License, or any newer version.
 #
-# Examples...
-# 
-# USR_CFLAGS += -fPIC
-# USR_CFLAGS   += -DDEBUG_PRINT
-# USR_CPPFLAGS += -DDEBUG_PRINT
-# USR_CPPFLAGS += -DUSE_TYPED_RSET
-# USR_INCLUDES += -I/usr/include/libusb-1.0
-# USR_LDFLAGS += -lusb-1.0
+#  This program is distributed in the hope that it will be useful, but WITHOUT
+#  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+#  more details.
+#
+#  You should have received a copy of the GNU General Public License along with
+#  this program. If not, see https://www.gnu.org/licenses/gpl-2.0.txt
+#
+# Author  : Jeong Han Lee
+# email   : han.lee@esss.se
+# Date    : Monday, November 20 09:31:24 CET 2017
+# version : 0.0.1
 
-# USR_LDFLAGS += -L /opt/etherlab/lib
-# USR_LDFLAGS += -lethercat
-# USR_LDFLAGS += -Wl,-rpath=/opt/etherlab/lib
-#
-#
-# PCIAPP:= pciApp
-#
-# HEADERS += $(PCIAPP)/devLibPCI.h
-# HEADERS += $(PCIAPP)/devLibPCIImpl.h
+# Get where_am_I before include driver.makefile.
+# After driver.makefile, where_am_I is the epics base,
+# so we cannot use it
 
-# SOURCES += $(wildcard $(PCIAPP)/devLib*.c)
-# SOURCES += $(PCIAPP)/pcish.c
-# SOURCES_Linux += $(PCIAPP)/os/Linux/devLibPCIOSD.c
 
-# DBDS += $(PCIAPP)/epicspci.dbd
+where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-# MRMSHARED:= mrmShared
-# MRMSHAREDSRC:=${MRMSHARED}/src
-# MRMSHAREDDB:=${MRMSHARED}/Db
-# TEMPLATES += $(wildcard $(MRMSHAREDDB)/*.db)
-# TEMPLATES += $(wildcard $(MRMSHAREDDB)/*.template)
-# TEMPLATES += $(wildcard $(MRMSHAREDDB)/*.substitutions)
+include $(REQUIRE_TOOLS)/driver.makefile
+
+APP:=modbusApp
+APPDB:=$(APP)/Db
+APPSRC:=$(APP)/src
+
+#USR_INCLUDES += -I$(where_am_I)/$(APPSRC)
+
+TEMPLATES += $(wildcard $(APPDB)/*.template)
+
+
+SOURCES   += $(APPSRC)/modbusInterpose.c
+SOURCES   += $(APPSRC)/drvModbusAsyn.c
+DBDS      += $(APPSRC)/modbusSupport.dbd
+HEADERS   += $(APPSRC)/drvModbusAsyn.h
 

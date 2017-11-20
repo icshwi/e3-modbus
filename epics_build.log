@@ -1,0 +1,99 @@
+sudo -E bash -c "make -C modbus"
+make[1]: Entering directory '/home/jhlee/e3/e3-modbus/modbus'
+make -C ./configure install 
+make[2]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/configure'
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/makeMakefile.pl O.linux-x86_64 ../..
+mkdir O.Common
+make -C O.linux-x86_64 -f ../Makefile TOP=../.. \
+    T_A=linux-x86_64 install
+make[3]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/configure/O.linux-x86_64'
+Installing config file /epics/bases/base-3.15.5/epics-modules/modbus/configure/RELEASE
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/configure
+make[3]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/configure/O.linux-x86_64'
+make[2]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/configure'
+make -C ./modbusApp install 
+make[2]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp'
+make -C ./src install 
+make[3]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/src'
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/makeMakefile.pl O.linux-x86_64 ../../..
+mkdir O.Common
+make -C O.linux-x86_64 -f ../Makefile TOP=../../.. \
+    T_A=linux-x86_64 install
+make[4]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/src/O.linux-x86_64'
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64  -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -MM -MF modbusMain.d  ../modbusMain.cpp
+Expanding dbd file ../modbusInclude.dbd
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/dbdExpand.pl   -I. -I.. -I../O.Common -I/epics/bases/base-3.15.5/epics-modules/modbus/dbd -I/epics/bases/base-3.15.5/epics-modules/asyn/dbd -I/epics/bases/base-3.15.5/dbd -o modbus.dbd ../modbusInclude.dbd
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/registerRecordDeviceDriver.pl   -I. -I.. -I../O.Common -I/epics/bases/base-3.15.5/epics-modules/modbus/dbd -I/epics/bases/base-3.15.5/epics-modules/asyn/dbd -I/epics/bases/base-3.15.5/dbd    -o modbus_registerRecordDeviceDriver.cpp ../O.Common/modbus.dbd modbus_registerRecordDeviceDriver /epics/bases/base-3.15.5/epics-modules/modbus
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64  -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -MM -MF modbus_registerRecordDeviceDriver.d  modbus_registerRecordDeviceDriver.cpp
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -MM -MF testModbusSyncIO.d  ../testModbusSyncIO.cpp
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -MM -MF modbusInterpose.d  ../modbusInterpose.c
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -MM -MF drvModbusAsyn.d  ../drvModbusAsyn.c
+Installing created dbd file /epics/bases/base-3.15.5/epics-modules/modbus/dbd/modbus.dbd
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/dbd
+Installing dbd file /epics/bases/base-3.15.5/epics-modules/modbus/dbd/modbusSupport.dbd
+Installing generic include file /epics/bases/base-3.15.5/epics-modules/modbus/include/drvModbusAsyn.h
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/include
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -c ../drvModbusAsyn.c
+/usr/bin/gcc  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -c ../modbusInterpose.c
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64 -fPIC -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -c ../testModbusSyncIO.cpp
+/usr/bin/ar -rc    libmodbus.a         drvModbusAsyn.o modbusInterpose.o testModbusSyncIO.o
+/usr/bin/ranlib libmodbus.a
+/usr/bin/g++ -o libmodbus.so -shared -fPIC -Wl,-hlibmodbus.so -L/epics/bases/base-3.15.5/epics-modules/asyn/lib/linux-x86_64 -L/epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64 -L/epics/bases/base-3.15.5/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/epics-modules/asyn/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/lib/linux-x86_64           -rdynamic -m64             drvModbusAsyn.o modbusInterpose.o testModbusSyncIO.o   -lasyn -ldbRecStd -ldbCore -lca -lCom   -lpthread   -lreadline -lm -lrt -ldl -lgcc
+Installing shared library /epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64/libmodbus.so
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/lib
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64
+Installing library /epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64/libmodbus.a
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64  -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -c modbus_registerRecordDeviceDriver.cpp
+/usr/bin/g++  -D_GNU_SOURCE -D_DEFAULT_SOURCE            -D_X86_64_  -DUNIX  -Dlinux     -O3 -g   -Wall      -mtune=generic     -m64  -I. -I../O.Common -I. -I. -I.. -I/epics/bases/base-3.15.5/epics-modules/modbus/include/compiler/gcc -I/epics/bases/base-3.15.5/epics-modules/modbus/include/os/Linux -I/epics/bases/base-3.15.5/epics-modules/modbus/include   -I/epics/bases/base-3.15.5/epics-modules/asyn/include -I/epics/bases/base-3.15.5/include/compiler/gcc -I/epics/bases/base-3.15.5/include/os/Linux -I/epics/bases/base-3.15.5/include        -c ../modbusMain.cpp
+/usr/bin/g++ -o modbusApp  -L/epics/bases/base-3.15.5/epics-modules/asyn/lib/linux-x86_64 -L/epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64 -L/epics/bases/base-3.15.5/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/epics-modules/asyn/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/epics-modules/modbus/lib/linux-x86_64 -Wl,-rpath,/epics/bases/base-3.15.5/lib/linux-x86_64           -rdynamic -m64             modbus_registerRecordDeviceDriver.o modbusMain.o   -lmodbus -lasyn -ldbRecStd -ldbCore -lca -lCom   
+Installing created executable /epics/bases/base-3.15.5/epics-modules/modbus/bin/linux-x86_64/modbusApp
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/bin
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/bin/linux-x86_64
+make[4]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/src/O.linux-x86_64'
+make[3]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/src'
+make -C ./Db install 
+make[3]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/Db'
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/makeMakefile.pl O.linux-x86_64 ../../..
+mkdir O.Common
+make -C O.linux-x86_64 -f ../Makefile TOP=../../.. \
+    T_A=linux-x86_64 install
+make[4]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/Db/O.linux-x86_64'
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/bi_word.template
+mkdir /epics/bases/base-3.15.5/epics-modules/modbus/db
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/bo_word.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/bi_bit.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/bo_bit.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/longin.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/longout.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/longinInt32.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/longoutInt32.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/mbbiDirect.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/mbboDirect.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/ai.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/ai_average.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/ao.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/aiFloat64.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/aoFloat64.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/intarray_in.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/intarray_out.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/stringin.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/stringout.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/stringWaveformIn.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/stringWaveformOut.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/statistics.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/asynRecord.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/poll_delay.template
+Installing template file /epics/bases/base-3.15.5/epics-modules/modbus/db/poll_trigger.template
+make[4]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/Db/O.linux-x86_64'
+make[3]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp/Db'
+make[2]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/modbusApp'
+make -C ./iocBoot install 
+make[2]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/iocBoot'
+make -C ./iocTest install 
+make[3]: Entering directory '/home/jhlee/e3/e3-modbus/modbus/iocBoot/iocTest'
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/convertRelease.pl -t /epics/bases/base-3.15.5/epics-modules/modbus envPaths
+perl -CSD /epics/bases/base-3.15.5/bin/linux-x86_64/convertRelease.pl -a linux-x86_64 -t /epics/bases/base-3.15.5/epics-modules/modbus cdCommands
+make[3]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/iocBoot/iocTest'
+make[2]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus/iocBoot'
+make[1]: Leaving directory '/home/jhlee/e3/e3-modbus/modbus'
