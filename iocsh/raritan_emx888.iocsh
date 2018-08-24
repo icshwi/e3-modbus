@@ -1,0 +1,12 @@
+# ### Raritan EXM2-888 ###
+#- ###################################################
+#- PORTNAME         - MODBUS PORTNAME
+#- HOSTNAME         - MODBUS HOSTNAME
+#- PORT             - Optional:  MODBUS Default PORT of Raritan EMX888
+#-                    Default: 502
+#- ###################################################
+
+drvAsynIPPortConfigure("$(PORTNAME)",$(HOSTNAME):$(PORT=502),$(PRIORITY=0),$(NOAUTOCONNECT=0),$(NOPROCESSEOS=1))
+asynSetOption("$(PORTNAME)",0,"disconnectOnReadTimeout", "Y")
+modbusInterposeConfig("$(PORTNAME)",0,5000,0)
+
