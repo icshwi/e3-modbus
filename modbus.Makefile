@@ -17,16 +17,10 @@
 #
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Thursday, May  3 22:51:33 CEST 2018
+# Date    : Monday, October 15 17:22:50 CEST 2018
 # version : 0.0.2
 
-# Get where_am_I before include driver.makefile.
-# After driver.makefile, where_am_I is the epics base,
-# so we cannot use it
-
-
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(where_am_I)/../configure/DECOUPLE_FLAGS
 
@@ -46,15 +40,15 @@ SOURCES   += $(APPSRC)/drvModbusAsyn.c
 DBDS      += $(APPSRC)/modbusSupport.dbd
 
 
-
 TEMPLATES += $(wildcard $(APPDB)/*.template)
+
+SCRIPTS += ../iocsh/modbus_s7plc.iocsh
+
 
 
 # db rule is the default in RULES_E3, so add the empty one
 
 EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
-MSI =  $(EPICS_BASE_HOST_BIN)/msi
-
 
 USR_DBFLAGS += -I . -I ..
 USR_DBFLAGS += -I$(EPICS_BASE)/db

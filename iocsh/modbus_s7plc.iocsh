@@ -1,0 +1,50 @@
+# ### Raritan EXM2-888 ###
+#- ###################################################
+#- PORTNAME         - MODBUS PORTNAME
+#- HOSTNAME         - MODBUS HOSTNAME
+#- PORT             - Optional:  MODBUS Default PORT of Raritan EMX888
+#-                    Default: 502
+#- ###################################################
+
+epicsEnvSet(MODBUS_NAME,  "$(PLC_NAME)")
+epicsEnvSet(MODBUS_INET, "$(MODBUS_IP)")
+epicsEnvSet(MODBUS_PORT, "$(MODBUS_PORT=502)")
+epicsEnvSet(MODBUS_PRIORITY, "$(PRIORITY=0)")
+epicsEnvSet(MODBUS_NOAUTOCONNECT, $(NOAUTOCONNECT=0)")
+epicsEnvSet(MODBUS_NOPROCESSEOS, "$(NOPROCESSEOS=1)")
+
+epicsEnvSet(MODBUS_LINKTYPE, "$(LINKTYPE=0)") 
+epicsEnvSet(MODBUS_TIMEOUT,  "$(TIMEOUT=3000)")
+epicsEnvSet(MODBUS_WRITEDELAY, "$(WRITEDELAY=0)")
+
+drvAsynIPPortConfigure($(MODBUS_NAME), $(MODBUS_INET):$(MODBUS_PORT),$(MODBUS_PRIORITY),$(MODBUS_NOAUTOCONNECT),$(MODBUS_NOPROCESSEOS))
+
+modbusInterposeConfig($(MODBUS_NAME), $(MODBUS_LINKTYPE), $(MODBUS_TIMEOUT), $(MODBUS_WRITEDELAY))
+
+# drvModbusAsynConfigure("portName", "tcpPortName", slaveAddress, modbusFunction, modbusStartAddress, modbusLength, dataType, pollMsec, "plcType")
+
+epicsEnvSet(MODBUS_TYPE, "$(TYPE=S7-1500)")
+
+
+
+epicsEnvSet(MODBUS_RSLAVEADDR, "$(RSLAVE_ADDR=0)")
+epicsEnvSet(MODBUS_RFUNCCODE, "$(RFUNC_CODE=3)")
+epicsEnvSet(MODBUS_RSTART_ADDR, "$(RSTART_ADDR=0)")
+epicsEnvSet(MODBUS_RLENGTH, "$(RLENGTH=1)")
+epicsEnvSet(MODBUS_RDATATYPE, "$(RDATATYPE=0)")
+epicsEnvSet(MODBUS_RPOLLDELAY, "$(RPOLLDELAY=1000)")
+epicsEnvSet(MODBUS_DISABLE_READ, "$(DIABLE_READ=#)")
+
+$(MODBUS_DISABLE_READ) drvModbusAsynConfigure("$(MODBUS_NAME)read",$(MODBUS_NAME), $(MODBUS_RSLAVEADDR), $(MODBUS_RFUNCCODE), $(MODBUS_RSTART_ADDR), $(MODBUS_RLENGTH), $(MODBUS_RDATATYPE), $(MODBUS_RPOLLDELAY), "$(MODBUS_TYPE)")
+
+
+epicsEnvSet(MODBUS_WSLAVEADDR, "$(WSLAVE_ADDR=0)")
+epicsEnvSet(MODBUS_WFUNCCODE, "$(WFUNC_CODE=16)")
+epicsEnvSet(MODBUS_WSTART_ADDR, "$(WSTART_ADDR=-1)")
+epicsEnvSet(MODBUS_WLENGTH, "$(WLENGTH=2)")
+epicsEnvSet(MODBUS_WDATATYPE, "$(WDATATYPE=0)")
+epicsEnvSet(MODBUS_WPOLLDELAY, "$(WPOLLDELAY=0)")
+
+
+drvModbusAsynConfigure("$(MODBUS_NAME)write",$(MODBUS_NAME), $(MODBUS_WSLAVEADDR), $(MODBUS_WFUNCCODE), $(MODBUS_WSTART_ADDR), $(MODBUS_WLENGTH), $(MODBUS_WDATATYPE), $(MODBUS_WPOLLDELAY), "$(MODBUS_TYPE)")
+
