@@ -1,50 +1,99 @@
-# ### Raritan EXM2-888 ###
-#- ###################################################
-#- PORTNAME         - MODBUS PORTNAME
-#- HOSTNAME         - MODBUS HOSTNAME
-#- PORT             - Optional:  MODBUS Default PORT of Raritan EMX888
-#-                    Default: 502
-#- ###################################################
-
+#- ###         MODBUS   S7PLC   iocsh               ###
+#- ####################################################
+#- >> Mandatory
+#- PLC_NAME       - MODBUS PLC <name> on address <IPaddr> port <port>
+#- PLC_IP         - MODBUS PLC IP address
+#-
+#- >> Optional
+#- https://epics.anl.gov/modules/soft/asyn/R4-29/asynDriver.html#drvAsynSerialPort
+#- 
+#- PLC_PORT       - ASYN   PLC Port, Default : 502
+#- PRIORITY       - ASYN   PRIORITY, Default : 0
+#- NOAUTOCONNECT  - ASYN   noAutoconnect, Default : 0
+#-                         0 :    Auto connection
+#-                         1 : no Auto connection
+#- NOPROCESSEOS   - ASYN   noProcessEos, Default : 1
+#-
+#- LINKTYPE       - MODBUS linktype, Default : 0
+#-                  0 = TCP/IP
+#-                  1 = RTU
+#-                  2 = ASCII 
+#- TIMEOUT        - MODBUS timeout, Default : 3000
+#-                  ms, 0 -> 2000 (By modbus)
+#- WRITEDELAY     - MODBUS write delay ms
+#-
+#- >> Optional
+#- PLC_PORT       - PLC Port, Default : 2000
+#- OUTZIE         - size of data bock IOC -> PLC [bytes], Default=0 
+#- BIGENDIAN      - Default : 1
+#-                  <bigEndian>=1   : motorola format data (MSB first)
+#-                  <bigEndian>=0 : intel format data (LSB first)
+#- TIMEOUT        - Default : 3000
+#-                  time to wait for input before disconnecting [ms]
+#- INTERVAL       - Default : 0
+#-                  time to wait before sending new data to PLC [ms]
+#- DEBUG_LEVEL    - Default : 0
+#-                  -1 :  no output
+#-                   0 :   errors only
+#-                   1 :   startup messages
+#-                   2 : + output record processing
+#-                   3 : + inputput record processing
+#-                   4 : + driver calls
+#-                   5 : + io printout
+#-                       be careful using >1 since many messages may introduce delays
+#-
+#- MOD_TYPE         - MODBUS Type, Default="S7-1500"
+#-
+#- MOD_DISABLE_READ - MODBUS Disable READ function, Default=#
+#-                    Default is diable, 
+#-                    Set "" if enable is needed
+#- RSLAVE_ADDR      - Read Slave Addr, Default 0
+#- RFUNC_CODE       - Read Slaver Function Code, Default, 3
+#- RSTART_ADDR      - Read Start Addr, Default 0
+#- RLENGTH          - Read Length, Default 1
+#- RDATATYPE        - Read Datatype, Default 0
+#- RPOLLDELAY       - Read Poll Delay, Default 1000 (ms)
+#- WSLAVE_ADDR      - Write Slave Addr, Default 0
+#- WFUNC_CODE       - Write Slave Function Code, Default, 16
+#- WSTART_ADDR      - Write Start Addr, Default -1
+#- WLENGTH          - Write Length, Default 2
+#- WDATATYPE        - Write Datatype, Default 0
+#- WPOLLDELAY       - Write Poll Delay, Default 0 (ms)
+#-
 epicsEnvSet(MODBUS_NAME,  "$(PLC_NAME)")
-epicsEnvSet(MODBUS_INET, "$(MODBUS_IP)")
-epicsEnvSet(MODBUS_PORT, "$(MODBUS_PORT=502)")
+epicsEnvSet(MODBUS_INET,  "$(PLC_IP)")
+epicsEnvSet(MODBUS_PORT,  "$(PLC_PORT=502)")
 epicsEnvSet(MODBUS_PRIORITY, "$(PRIORITY=0)")
-epicsEnvSet(MODBUS_NOAUTOCONNECT, $(NOAUTOCONNECT=0)")
+epicsEnvSet(MODBUS_NOAUTOCONNECT, "$(NOAUTOCONNECT=0)")
 epicsEnvSet(MODBUS_NOPROCESSEOS, "$(NOPROCESSEOS=1)")
-
+#-
 epicsEnvSet(MODBUS_LINKTYPE, "$(LINKTYPE=0)") 
 epicsEnvSet(MODBUS_TIMEOUT,  "$(TIMEOUT=3000)")
 epicsEnvSet(MODBUS_WRITEDELAY, "$(WRITEDELAY=0)")
-
+#-
+#-https://epics.anl.gov/modules/soft/asyn/R4-29/asynDriver.html#drvAsynSerialPort
 drvAsynIPPortConfigure($(MODBUS_NAME), $(MODBUS_INET):$(MODBUS_PORT),$(MODBUS_PRIORITY),$(MODBUS_NOAUTOCONNECT),$(MODBUS_NOPROCESSEOS))
-
+#-http://cars9.uchicago.edu/software/epics/modbusDoc.html
 modbusInterposeConfig($(MODBUS_NAME), $(MODBUS_LINKTYPE), $(MODBUS_TIMEOUT), $(MODBUS_WRITEDELAY))
-
-# drvModbusAsynConfigure("portName", "tcpPortName", slaveAddress, modbusFunction, modbusStartAddress, modbusLength, dataType, pollMsec, "plcType")
-
-epicsEnvSet(MODBUS_TYPE, "$(TYPE=S7-1500)")
-
-
-
+#-
+epicsEnvSet(MODBUS_TYPE, "$(MOD_TYPE=S7-1500)")
+epicsEnvSet(MODBUS_DISABLE_READ, "$(MOD_DISABLE_READ=#)")
+#-
 epicsEnvSet(MODBUS_RSLAVEADDR, "$(RSLAVE_ADDR=0)")
 epicsEnvSet(MODBUS_RFUNCCODE, "$(RFUNC_CODE=3)")
 epicsEnvSet(MODBUS_RSTART_ADDR, "$(RSTART_ADDR=0)")
 epicsEnvSet(MODBUS_RLENGTH, "$(RLENGTH=1)")
 epicsEnvSet(MODBUS_RDATATYPE, "$(RDATATYPE=0)")
 epicsEnvSet(MODBUS_RPOLLDELAY, "$(RPOLLDELAY=1000)")
-epicsEnvSet(MODBUS_DISABLE_READ, "$(DIABLE_READ=#)")
-
-$(MODBUS_DISABLE_READ) drvModbusAsynConfigure("$(MODBUS_NAME)read",$(MODBUS_NAME), $(MODBUS_RSLAVEADDR), $(MODBUS_RFUNCCODE), $(MODBUS_RSTART_ADDR), $(MODBUS_RLENGTH), $(MODBUS_RDATATYPE), $(MODBUS_RPOLLDELAY), "$(MODBUS_TYPE)")
-
-
+#-
 epicsEnvSet(MODBUS_WSLAVEADDR, "$(WSLAVE_ADDR=0)")
 epicsEnvSet(MODBUS_WFUNCCODE, "$(WFUNC_CODE=16)")
 epicsEnvSet(MODBUS_WSTART_ADDR, "$(WSTART_ADDR=-1)")
 epicsEnvSet(MODBUS_WLENGTH, "$(WLENGTH=2)")
 epicsEnvSet(MODBUS_WDATATYPE, "$(WDATATYPE=0)")
 epicsEnvSet(MODBUS_WPOLLDELAY, "$(WPOLLDELAY=0)")
-
-
-drvModbusAsynConfigure("$(MODBUS_NAME)write",$(MODBUS_NAME), $(MODBUS_WSLAVEADDR), $(MODBUS_WFUNCCODE), $(MODBUS_WSTART_ADDR), $(MODBUS_WLENGTH), $(MODBUS_WDATATYPE), $(MODBUS_WPOLLDELAY), "$(MODBUS_TYPE)")
-
+#-
+$(MODBUS_DISABLE_READ) drvModbusAsynConfigure("$(MODBUS_NAME)read",$(MODBUS_NAME),$(MODBUS_RSLAVEADDR),$(MODBUS_RFUNCCODE),$(MODBUS_RSTART_ADDR),$(MODBUS_RLENGTH),$(MODBUS_RDATATYPE),$(MODBUS_RPOLLDELAY),"$(MODBUS_TYPE)")
+#-
+drvModbusAsynConfigure("$(MODBUS_NAME)write",$(MODBUS_NAME),$(MODBUS_WSLAVEADDR),$(MODBUS_WFUNCCODE),$(MODBUS_WSTART_ADDR),$(MODBUS_WLENGTH),$(MODBUS_WDATATYPE),$(MODBUS_WPOLLDELAY),"$(MODBUS_TYPE)")
+#-
