@@ -22,26 +22,6 @@
 #-                  ms, 0 -> 2000 (By modbus)
 #- WRITEDELAY     - MODBUS write delay ms
 #-
-#- >> Optional
-#- PLC_PORT       - PLC Port, Default : 2000
-#- OUTZIE         - size of data bock IOC -> PLC [bytes], Default=0 
-#- BIGENDIAN      - Default : 1
-#-                  <bigEndian>=1   : motorola format data (MSB first)
-#-                  <bigEndian>=0 : intel format data (LSB first)
-#- TIMEOUT        - Default : 3000
-#-                  time to wait for input before disconnecting [ms]
-#- INTERVAL       - Default : 0
-#-                  time to wait before sending new data to PLC [ms]
-#- DEBUG_LEVEL    - Default : 0
-#-                  -1 :  no output
-#-                   0 :   errors only
-#-                   1 :   startup messages
-#-                   2 : + output record processing
-#-                   3 : + inputput record processing
-#-                   4 : + driver calls
-#-                   5 : + io printout
-#-                       be careful using >1 since many messages may introduce delays
-#-
 #- MOD_TYPE         - MODBUS Type, Default="S7-1500"
 #-
 #- MOD_DISABLE_READ - MODBUS Disable READ function, Default=#
