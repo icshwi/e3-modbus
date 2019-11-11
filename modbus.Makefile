@@ -24,31 +24,37 @@ where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
 include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 
-
 ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
 endif
 
+USR_CFLAGS   += -DUSE_TYPED_RSET
+USR_CPPFLAGS += -DUSE_TYPED_RSET
 
 APP:=modbusApp
 APPDB:=$(APP)/Db
 APPSRC:=$(APP)/src
 
 HEADERS   += $(APPSRC)/drvModbusAsyn.h
-SOURCES   += $(APPSRC)/modbusInterpose.c
-SOURCES   += $(APPSRC)/drvModbusAsyn.c
-DBDS      += $(APPSRC)/modbusSupport.dbd
+HEADERS   += $(APPSRC)/modbusInterpose.h
+HEADERS   += $(APPSRC)/modbus.h
 
+SOURCES   += $(APPSRC)/drvModbusAsyn.cpp
+SOURCES   += $(APPSRC)/modbusInterpose.c
+
+# Cannot handle *Include.dbd file 
+#SOURCES   += $(APPSRC)/testModbusSyncIO.cpp
+#DBDEXPANDPATH += $(E3_SITEMODS_PATH)/asyn/$(ASYN_DEP_VERSION)/dbd
+#DBDS      += $(APPSRC)/modbusInclude.dbd
+
+DBDS      += $(APPSRC)/modbusSupport.dbd
 
 TEMPLATES += $(wildcard $(APPDB)/*.template)
 
 SCRIPTS += ../iocsh/modbus_s7plc.iocsh
 
 
-
-# db rule is the default in RULES_E3, so add the empty one
-
-EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
+# EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
 
 USR_DBFLAGS += -I . -I ..
 USR_DBFLAGS += -I$(EPICS_BASE)/db
